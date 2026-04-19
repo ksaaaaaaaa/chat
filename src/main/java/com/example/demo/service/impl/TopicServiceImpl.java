@@ -134,6 +134,7 @@ public class TopicServiceImpl implements TopicService {
             }
         } catch (Exception e) {
             logger.error("可能出现异常了");
+            logger.error(null);
             logger.error("添加收藏失败, userId: {}, topicId: {}", userId, topicId, e);
             throw new RuntimeException("添加收藏失败", e);
         }
