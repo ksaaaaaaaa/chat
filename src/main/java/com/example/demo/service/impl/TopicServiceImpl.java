@@ -43,7 +43,6 @@ public class TopicServiceImpl implements TopicService {
         "体育运动",
         "职场经验",
         "教育学习",
-        "宠物萌宠",
         "时尚穿搭",
         "健康养生",
         "情感交流",
@@ -134,6 +133,7 @@ public class TopicServiceImpl implements TopicService {
                 logger.info("用户 {} 成功收藏话题 {}", userId, topicId);
             }
         } catch (Exception e) {
+            logger.error("出现异常");
             logger.error("添加收藏失败, userId: {}, topicId: {}", userId, topicId, e);
             throw new RuntimeException("添加收藏失败", e);
         }
