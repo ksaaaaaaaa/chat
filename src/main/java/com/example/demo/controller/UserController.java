@@ -18,6 +18,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -126,6 +127,29 @@ public class UserController {
             }
             return ResponseEntity.ok(user);
         } catch (RuntimeException e) {
+            Map<String, String> response = new HashMap<>();
+            response.put("error", e.getMessage());
+            return ResponseEntity.badRequest().body(response);
+        }
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<?> searchUsers(
+            @RequestParam(required = false) String keyword,
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        try {
+            List<User> users = userService.searchUsers(keyword, page, size);
+            long total = userService.countSearchUsers(keyword);
+            
+            Map<String, Object> response = new HashMap<>();
+            response.put("users", users);
+            response.put("total", total);
+            response.put("page", page);
+            response.put("size", size);
+            
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
             Map<String, String> response = new HashMap<>();
             response.put("error", e.getMessage());
             return ResponseEntity.badRequest().body(response);

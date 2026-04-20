@@ -152,6 +152,17 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
+    @Override
+    public List<User> searchUsers(String keyword, int page, int size) {
+        int offset = (page - 1) * size;
+        return userMapper.searchUsers(keyword, offset, size);
+    }
+
+    @Override
+    public long countSearchUsers(String keyword) {
+        return userMapper.countSearchUsers(keyword);
+    }
+
     // 管理员功能实现
     @Override
     public List<User> findAllWithFilters(Map<String, Object> filters, int page, int size) {
