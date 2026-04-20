@@ -45,8 +45,7 @@ public class TopicServiceImpl implements TopicService {
         "教育学习",
         "时尚穿搭",
         "健康养生",
-        "情感交流",
-        "兴趣爱好"
+        "情感交流"
     );
 
     @Override
