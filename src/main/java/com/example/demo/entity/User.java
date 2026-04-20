@@ -13,5 +13,7 @@ public class User {
     private String status;
     private Integer favoritesCount;
     private Integer likesCount;
+    private Integer followingCount;
+    private Integer followersCount;
     private LocalDateTime createdAt;
 } 

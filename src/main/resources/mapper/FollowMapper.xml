@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.FollowMapper">
+    
+    <resultMap id="FollowDTO" type="com.example.demo.dto.FollowDTO">
+        <id property="id" column="id"/>
+        <result property="followerId" column="follower_id"/>
+        <result property="followingId" column="following_id"/>
+        <result property="followingUsername" column="following_username"/>
+        <result property="followingEmail" column="following_email"/>
+        <result property="followingRole" column="following_role"/>
+        <result property="followingFavoritesCount" column="following_favorites_count"/>
+        <result property="followingLikesCount" column="following_likes_count"/>
+        <result property="followingFollowingCount" column="following_following_count"/>
+        <result property="followingFollowersCount" column="following_followers_count"/>
+        <result property="followingCreatedAt" column="following_created_at"/>
+        <result property="createdAt" column="created_at"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.example.demo.entity.Follow" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO forum_follow (follower_id, following_id, created_at)
+        VALUES (#{followerId}, #{followingId}, NOW())
+    </insert>
+
+    <delete id="delete">
+        DELETE FROM forum_follow
+        WHERE follower_id = #{followerId} AND following_id = #{followingId}
+    </delete>
+
+    <select id="exists" resultType="boolean">
+        SELECT EXISTS(
+            SELECT 1 FROM forum_follow
+            WHERE follower_id = #{followerId} AND following_id = #{followingId}
+        )
+    </select>
+
+    <select id="findFollowingByUserId" resultMap="FollowDTO">
+        SELECT 
+            f.id,
+            f.follower_id,
+            f.following_id,
+            u.username as following_username,
+            u.email as following_email,
+            u.role as following_role,
+            u.favorites_count as following_favorites_count,
+            u.likes_count as following_likes_count,
+            u.following_count as following_following_count,
+            u.followers_count as following_followers_count,
+            u.created_at as following_created_at,
+            f.created_at
+        FROM forum_follow f
+        INNER JOIN forum_user u ON f.following_id = u.id
+        WHERE f.follower_id = #{userId}
+        ORDER BY f.created_at DESC
+    </select>
+
+    <select id="findFollowersByUserId" resultMap="FollowDTO">
+        SELECT 
+            f.id,
+            f.follower_id,
+            f.following_id,
+            u.username as following_username,
+            u.email as following_email,
+            u.role as following_role,
+            u.favorites_count as following_favorites_count,
+            u.likes_count as following_likes_count,
+            u.following_count as following_following_count,
+            u.followers_count as following_followers_count,
+            u.created_at as following_created_at,
+            f.created_at
+        FROM forum_follow f
+        INNER JOIN forum_user u ON f.follower_id = u.id
+        WHERE f.following_id = #{userId}
+        ORDER BY f.created_at DESC
+    </select>
+
+    <select id="countFollowing" resultType="int">
+        SELECT COUNT(*) FROM forum_follow WHERE follower_id = #{userId}
+    </select>
+
+    <select id="countFollowers" resultType="int">
+        SELECT COUNT(*) FROM forum_follow WHERE following_id = #{userId}
+    </select>
+</mapper> 

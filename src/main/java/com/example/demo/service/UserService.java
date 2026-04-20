@@ -17,6 +17,9 @@ public interface UserService {
     User findByUsername(String username);
     User toggleUserStatus(Integer userId);
     
+    List<User> searchUsers(String keyword, int page, int size);
+    long countSearchUsers(String keyword);
+    
     // 管理员功能
     List<User> findAllWithFilters(Map<String, Object> filters, int page, int size);
     long countWithFilters(Map<String, Object> filters);

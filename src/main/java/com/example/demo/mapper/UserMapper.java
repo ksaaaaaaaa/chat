@@ -16,6 +16,13 @@ public interface UserMapper {
     void update(User user);
     void updateFavoritesCount(@Param("id") Integer id, @Param("favoritesCount") Integer favoritesCount);
     void updateLikesCount(@Param("id") Integer id, @Param("likesCount") Integer likesCount);
+    void updateFollowingCount(@Param("id") Integer id, @Param("followingCount") Integer followingCount);
+    void updateFollowersCount(@Param("id") Integer id, @Param("followersCount") Integer followersCount);
+    
+    List<User> searchUsers(@Param("keyword") String keyword, 
+                          @Param("offset") int offset, 
+                          @Param("size") int size);
+    long countSearchUsers(@Param("keyword") String keyword);
     
     // 管理员功能
     List<User> findAllWithFilters(@Param("filters") Map<String, Object> filters, 
