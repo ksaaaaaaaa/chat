@@ -67,6 +67,7 @@ public class TopicServiceImpl implements TopicService {
         
         Topic existingTopic = topicMapper.findById(id);
         if (existingTopic == null) {
+            logger.error("话题不存在: {}", id);
             throw new RuntimeException("话题不存在");
         }
         if (!existingTopic.getUserId().equals(topic.getUserId())) {
