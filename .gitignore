@@ -1,18 +1,4 @@
-# Maven 编译输出目录
 target/
-*.class
-*.jar
-*.war
-*.ear
-
-# IDE 配置文件
 .idea/
 *.iml
-.mvn/
-
-# 日志文件
-*.log
-
-# 系统文件
-.DS_Store
-Thumbs.db
+*.class
